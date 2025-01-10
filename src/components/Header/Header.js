@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Stats } from './Stats';
-import { ThemeContext } from '../index';
+import { ThemeContext } from '../../index';
+import { Settings } from './Settings';
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
@@ -18,9 +19,6 @@ export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
 
     return (
         <header className={`header ${theme}`}>
-            <button onClick={toggleTheme}>
-                Switch to {theme === 'light' ? 'dark' : 'light'} theme
-            </button>
             <div className='left'>
                 <i className="pi pi-question-circle icon" onClick={() => setHelpDialogVisible(true)}></i>
             </div>
@@ -67,7 +65,7 @@ export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
                 breakpoints={{'960px': '75vw', '640px': '100vw'}}
             >
                 <div>
-                    <p>Coming soon!</p>
+                    <Settings />
                 </div>
             </Dialog>
         </header>
