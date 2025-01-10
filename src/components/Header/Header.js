@@ -3,6 +3,7 @@ import { Dialog } from 'primereact/dialog';
 import { Stats } from './Stats';
 import { ThemeContext } from '../../index';
 import { Settings } from './Settings';
+import './Header.css'; // Import the CSS file for styling
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
@@ -36,6 +37,7 @@ export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
                 visible={helpDialogVisible} 
                 style={{ width: '50vw' }}
                 onHide={() => setHelpDialogVisible(false)}
+                className={`p-dialog ${theme}`}
                 breakpoints={{'960px': '75vw', '640px': '100vw'}}
             >
                 <div>
@@ -49,6 +51,7 @@ export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
                 visible={statsDialogVisible} 
                 style={{ width: '50vw' }}
                 onHide={() => setStatsDialogVisible(false)}
+                className={`p-dialog ${theme}`}
                 breakpoints={{'960px': '75vw', '640px': '100vw'}}
             >
                 <div>
@@ -62,6 +65,7 @@ export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
                 visible={settingsDialogVisible} 
                 style={{ width: '50vw' }}
                 onHide={() => setSettingsDialogVisible(false)}
+                className={`p-dialog ${theme}`}
                 breakpoints={{'960px': '75vw', '640px': '100vw'}}
             >
                 <div>
