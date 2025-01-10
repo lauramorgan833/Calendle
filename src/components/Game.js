@@ -3,6 +3,7 @@ import { Board } from './Board';
 import { Shape } from './Shape';
 import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb';
 import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek} from '../lib/common';
+import { ThemeContext } from '..';
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState';
 
@@ -21,18 +22,23 @@ export const Game = ({ setStatsDialogVisible }) => {
     const [placedShapes, setPlacedShapes] = useState([]);
     const [shapes, setShapes] = useState(SHAPES);
     const [remainingShapes, setRemainingShapes] = useState(ShapeNames);
+    const { theme, setTheme } = useContext(ThemeContext);
 
     // create empty objects
     const [statistics] = useState(new CalendleStatistics());
     const [gameState] = useState(new CalendleState());
 
     useEffect(() => {
-        const today = new Date('1/15/2025');
+        const today = new Date();
         setDate(today);
 
         // initialize from LocalStorage
         statistics.initialize();
         gameState.initialize();
+
+        if (gameState.DarkMode) {
+            setTheme(gameState.DarkMode)
+        }
 
         // if new day or empty board - reset game board and game state
         if (gameState.Date !== today.toDateString()
