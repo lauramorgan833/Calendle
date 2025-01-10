@@ -4,6 +4,7 @@ import './styles/main.css'; // Import the CSS file
 import './styles/borders.css'; // Import the CSS file
 import { Game } from './components/Game';
 import { Header } from './components/Header/Header';
+import { AdvancedModeProvider } from './context/AdvancedModeContext';
 
 export const ThemeContext = createContext();
 
@@ -30,7 +31,9 @@ const root = createRoot(container);
 const render = (Component) => {
     root.render(
         <React.StrictMode>
-            <Component />
+            <AdvancedModeProvider>
+                <Component />
+            </AdvancedModeProvider>
         </React.StrictMode>
     );
 };

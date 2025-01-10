@@ -99,3 +99,18 @@
     background-color: var(--dialog-background-dark);
     color: var(--dialog-color-dark);
 }
+
+.setting-item {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.setting-item label {
+    font-size: 16px;
+    color: var(--text-light);
+}
+
+.setting-item input[type="checkbox"] {
+    margin-right: 10px;
+}

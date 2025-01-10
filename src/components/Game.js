@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { Board } from './Board'
 import { Shape } from './Shape'
 import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb'
 import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek } from '../lib/common'
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState'
+import { AdvancedModeContext } from '../context/AdvancedModeContext';
 
 const getYesterdayDateString = (today) => {
     const yesterday = new Date(today);
@@ -25,6 +26,7 @@ export const Game = ({setStatsDialogVisible}) => {
     // create empty objects
     const [statistics] = useState(new CalendleStatistics());
     const [gameState] = useState(new CalendleState());
+    const { advancedMode } = useContext(AdvancedModeContext);
 
     useEffect(() => {
         const today = new Date();
@@ -238,6 +240,7 @@ export const Game = ({setStatsDialogVisible}) => {
                         onRemoveShape={removeShape}
                         setCurrentShape={setCurrentShape}
                         winner={winner}
+                        advancedMode={advancedMode}
                     />
                 </div>
                 <div>
