@@ -20,8 +20,19 @@ const Home = () => {
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-root.render(
-  <React.StrictMode>
-    <Home />
-  </React.StrictMode>
-);
+const render = (Component) => {
+    root.render(
+        <React.StrictMode>
+            <Component />
+        </React.StrictMode>
+    );
+};
+
+render(Home);
+
+if (module.hot) {
+    module.hot.accept('./components/Game', () => {
+        const NextApp = require('./components/Game').default;
+        render(NextApp);
+    });
+}

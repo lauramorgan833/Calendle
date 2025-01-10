@@ -1,16 +1,16 @@
 import React from 'react';
-import './layout/main.css'; // Correct the CSS file path
+import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to Calendle</h1>
+      <header className="App-header">
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+      </header>
     </div>
   );
-}
-
-if (module.hot) {
-  module.hot.accept();
 }
 
 export default App;

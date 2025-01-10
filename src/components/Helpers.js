@@ -20,10 +20,10 @@ const getBorderClassName = (matrix, val, x, y, type) => {
 
         switch (type) {
         case 'CELL':
-            borderClassName += getCellBorderClassName(matrix, val, isExterior)
+            borderClassName += getCellBorderClassName(matrix, val, dir, newCoord, isExterior)
             break;
         case 'SHAPE':
-            borderClassName += getShapeBorderClassName(matrix, val, isExterior)
+            borderClassName += getShapeBorderClassName(matrix, val, dir, newCoord, isExterior)
             break;
         }   
     })
@@ -31,11 +31,11 @@ const getBorderClassName = (matrix, val, x, y, type) => {
     return borderClassName
 }
 
-const getCellBorderClassName = (matrix, val, isExterior) => {
+const getCellBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
     let borderClassName = '';
     if (val === 'dead') {
         if (!isExterior) {
-            const neighboringVal = matrix[newCoord[0]][newCoord[1]]
+            const neighboringVal = matrix[newCoord[0]][newCoord[1]];
             if (neighboringVal !== 'dead') {
                 borderClassName += ' border' + dir
             } else if (neighboringVal === 'dead') {
@@ -63,12 +63,10 @@ const getCellBorderClassName = (matrix, val, isExterior) => {
     return borderClassName;
 }
 
-const getShapeBorderClassName = (matrix, val, isExterior) => {
+const getShapeBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
     let borderClassName = '';
     if (!isExterior) {
-        borderClassName += ' border' + dir
-    } else {
-        const neighboringVal = matrix[newCoord[0]][newCoord[1]]
+        const neighboringVal = matrix[newCoord[0]][newCoord[1]] || undefined
         if (neighboringVal === val) {
             if (ShapeNames.includes(val)) {
                 borderClassName += ' shapeborder' + dir
@@ -82,7 +80,7 @@ const getShapeBorderClassName = (matrix, val, isExterior) => {
 
 export const getShapeClassName = (matrix, val, x, y, isSelected) => {
     // get border
-    const borderClassName = getShapeBorderClassName(matrix, val, x, y, 'SHAPE')
+    const borderClassName = getBorderClassName(matrix, val, x, y, 'SHAPE')
 
     // get color
     const colorClassName = ShapeNames.includes(val) ? 'shapeColor' : ''

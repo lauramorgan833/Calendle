@@ -16,6 +16,9 @@
     "debug": "react-scripts --inspect-brk=9229 start",
     "launch-debug": "npm start & code . -g .vscode/launch.json"
   },
+  "engines": {
+    "node": ">=10"
+  },
   "dependencies": {
     "prettier": "latest",
     "primeicons": "^5.0.0",
@@ -23,10 +26,16 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-icons": "^4.4.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "3.0.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^24.0.0",
+    "babel-loader": "^8.0.0",
+    "babel-preset-react-app": "^9.0.0",
+    "jest": "^24.0.0",
+    "postcss": "^7.0.0",
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
-    "eslint": "latest"
   },
   "browserslist": {
     "production": [
