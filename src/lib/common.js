@@ -98,8 +98,11 @@ export const createGrid = (date) => {
     const currentDayOfWeek = DaysOfWeek[date.getDay()]
     return InitialBoard.map(row =>
         row.map((cell, x) => {
-            const isFree = cell !== currentDate && cell !== currentMonth && cell !== currentDayOfWeek && cell !== 'dead'
-            return [cell, isFree ? 0 : -1]
+            const isCurrentDate = cell === currentDate || cell === currentMonth || cell === currentDayOfWeek;
+            const isDead = cell === 'dead';
+
+            const val = isDead ? 'dead' : isCurrentDate ? -1 : 0;
+            return [cell, val]
         })
     )
 }

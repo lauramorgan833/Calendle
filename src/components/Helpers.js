@@ -1,4 +1,6 @@
-const getBorderClassName = (matrix, val, x, y) => {
+import { ShapeNames } from "../lib/common"
+
+const getBorderClassName = (matrix, val, x, y, type) => {
     const directions = ['left', 'right', 'top', 'bottom']
     const directionCoords = {
         top: [-1, 0],
@@ -9,55 +11,108 @@ const getBorderClassName = (matrix, val, x, y) => {
 
     let borderClassName = ''
 
-    val &&
     directions.forEach(dir => {
-        // const length = Math.max(matrix.length, matrix[0].length);
         const rows = matrix.length
         const cols = matrix[0].length
         const newCoord = [x + directionCoords[dir][0], y + directionCoords[dir][1]]
-        if (newCoord[0] < 0 || newCoord[1] < 0 || newCoord[0] >= rows || newCoord[1] >= cols) {
-            borderClassName += ' border' + dir
-        } else {
-            const neighboringVal = matrix[newCoord[0]][newCoord[1]]
-            if (neighboringVal !== val) {
-                borderClassName += ' border' + dir
-            }
-        }
+        
+        const isExterior = newCoord[0] < 0 || newCoord[1] < 0 || newCoord[0] >= rows || newCoord[1] >= cols;
+
+        switch (type) {
+        case 'CELL':
+            borderClassName += getCellBorderClassName(matrix, val, isExterior)
+            break;
+        case 'SHAPE':
+            borderClassName += getShapeBorderClassName(matrix, val, isExterior)
+            break;
+        }   
     })
 
     return borderClassName
 }
 
-export const getCellClassName = (matrix, val, x, y, isSelected) => {
-    // get border
-    const borderClassName = getBorderClassName(matrix, val, x, y)
+const getCellBorderClassName = (matrix, val, isExterior) => {
+    let borderClassName = '';
+    if (val === 'dead') {
+        if (!isExterior) {
+            const neighboringVal = matrix[newCoord[0]][newCoord[1]]
+            if (neighboringVal !== 'dead') {
+                borderClassName += ' border' + dir
+            } else if (neighboringVal === 'dead') {
+                borderClassName += ' deadborder' + dir 
+            }
+        } else {
+            borderClassName += ' deadborder' + dir
+        }
+    } else {
+        if (isExterior) {
+            borderClassName += ' exteriorborder' + dir
+        } else {
+            const neighboringVal = matrix[newCoord[0]][newCoord[1]]
 
-    // get highlight
-    const highlightClassName = val ? 'highlight' : ''
+            // if same as neighboring cell
+            if (neighboringVal === val) {
+                if (ShapeNames.includes(val)) {
+                    borderClassName += ' shapeborder' + dir
+                } else {
+                    borderClassName += ' border' + dir
+                }
+            }
+        }
+    }
+    return borderClassName;
+}
+
+const getShapeBorderClassName = (matrix, val, isExterior) => {
+    let borderClassName = '';
+    if (!isExterior) {
+        borderClassName += ' border' + dir
+    } else {
+        const neighboringVal = matrix[newCoord[0]][newCoord[1]]
+        if (neighboringVal === val) {
+            if (ShapeNames.includes(val)) {
+                borderClassName += ' shapeborder' + dir
+            } else {
+                borderClassName += ' border' + dir
+            }
+        }
+    }
+    return borderClassName;
+}
+
+export const getShapeClassName = (matrix, val, x, y, isSelected) => {
+    // get border
+    const borderClassName = getShapeBorderClassName(matrix, val, x, y, 'SHAPE')
+
+    // get color
+    const colorClassName = ShapeNames.includes(val) ? 'shapeColor' : ''
 
     // get selected class name
     const selectedClassName = val && isSelected ? 'red' : ''
 
-    // get height/width
-    // let widthClassName = 'widthNoBorder'
-    // if (borderClassName.includes('left') || borderClassName.includes('right')) {
-    //     if (borderClassName.includes('left') && borderClassName.includes('right')) {
-    //         widthClassName = 'widthTwoBorder'
-    //     } else {
-    //         widthClassName = 'widthOneBorder'
-    //     }
-    // }
+    const styles = ['cellDimensions', borderClassName, colorClassName, selectedClassName].join(' ')
 
-    // let heightClassName = 'heightNoBorder'
-    // if (borderClassName.includes('top') || borderClassName.includes('bottom')) {
-    //     if (borderClassName.includes('top') && borderClassName.includes('bottom')) {
-    //         heightClassName = 'heightTwoBorder'
-    //     } else {
-    //         heightClassName = 'heightOneBorder'
-    //     }
-    // }
+    return styles
+}
 
-    const styles = ['cellDimensions', borderClassName, highlightClassName, selectedClassName].join(' ')
+
+export const getCellClassName = (matrix, val, x, y, isCurrentDateCell) => {
+    let cellClassName = 'cell';
+    if (!isCurrentDateCell && val === -1) {
+        return 'emptyCell';
+    } 
+
+    if (isCurrentDateCell) {
+        cellClassName += ' currentDate';
+    }
+    
+    // get border
+    const borderClassName = getBorderClassName(matrix, val, x, y, 'CELL')
+
+    // get color
+    const colorClassName = ShapeNames.includes(val) ? 'shapeColor' : ''
+
+    const styles = ['cellDimensions', cellClassName, borderClassName, colorClassName].join(' ')
 
     return styles
 }

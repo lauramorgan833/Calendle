@@ -38,6 +38,7 @@ h1 {
     align-items: center;
     display: flex;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .cellDimensions {
@@ -65,7 +66,7 @@ h1 {
     flex-direction: row;
 }
 
-.highlight {
+.shapeColor {
     background-color: #3d7f92;
     display: flex;
     cursor: pointer;
@@ -145,8 +146,52 @@ h1 {
     border-bottom: 1px solid black;
 }
 
-.exterior {
-    border-width: 2px;
+.exteriorborderleft {
+    border-left: 1.5px solid black;
+}
+
+.exteriorborderright {
+    border-right: 1.5px solid black;
+}
+
+.exteriorbordertop {
+    border-top: 1.5px solid black;
+}
+
+.exteriorborderbottom {
+    border-bottom: 1.5px solid black;
+}
+
+.shapeborderleft {
+    border-left: 1px solid #3d7f92;
+}
+
+.shapeborderright {
+    border-right: 1px solid #3d7f92;
+}
+
+.shapebordertop {
+    border-top: 1px solid #3d7f92;
+}
+
+.shapeborderbottom {
+    border-bottom: 1px solid #3d7f92;
+}
+
+.deadborderleft {
+    border-left: 1px solid white;
+}
+
+.deadborderright {
+    border-right: 1px solid white;
+}
+
+.deadbordertop {
+    border-top: 1px solid white;
+}
+
+.deadborderbottom {
+    border-bottom: 1px solid white;
 }
 
 .winner {
