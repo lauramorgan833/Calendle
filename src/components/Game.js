@@ -1,35 +1,33 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react'
-import { Board } from './Board'
-import { Shape } from './Shape'
-import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb'
-import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek, getShapes } from '../lib/common'
+import React, { useCallback, useEffect, useState, useContext } from 'react';
+import { Board } from './Board';
+import { Shape } from './Shape';
+import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb';
+import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek} from '../lib/common';
 import { CalendleStatistics } from '../models/CalendleStatistics';
-import { CalendleState } from '../models/CalendleState'
-import { AdvancedModeContext } from '../context/AdvancedModeContext';
+import { CalendleState } from '../models/CalendleState';
 
 const getYesterdayDateString = (today) => {
     const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1)
+    yesterday.setDate(yesterday.getDate() - 1);
     return yesterday.toDateString();
-}
+};
 
-export const Game = ({setStatsDialogVisible}) => {
-    const [date, setDate] = useState(new Date())
-    const [board, setBoard] = useState([])
-    const [count, setCount] = useState(0)
-    const [winner, setWinner] = useState(false)
-    const [currentShape, setCurrentShape] = useState('')
-    const [placedShapes, setPlacedShapes] = useState([])
-    const [remainingShapes, setRemainingShapes] = useState(ShapeNames)
+export const Game = ({ setStatsDialogVisible }) => {
+    const [date, setDate] = useState(new Date());
+    const [board, setBoard] = useState([]);
+    const [count, setCount] = useState(0);
+    const [winner, setWinner] = useState(false);
+    const [currentShape, setCurrentShape] = useState('');
+    const [placedShapes, setPlacedShapes] = useState([]);
+    const [shapes, setShapes] = useState(SHAPES);
+    const [remainingShapes, setRemainingShapes] = useState(ShapeNames);
 
     // create empty objects
     const [statistics] = useState(new CalendleStatistics());
     const [gameState] = useState(new CalendleState());
-    const { advancedMode } = useContext(AdvancedModeContext);
-    const [shapes, setShapes] = useState(getShapes(advancedMode));
 
     useEffect(() => {
-        const today = new Date();
+        const today = new Date('1/15/2025');
         setDate(today);
 
         // initialize from LocalStorage
@@ -39,7 +37,7 @@ export const Game = ({setStatsDialogVisible}) => {
         // if new day or empty board - reset game board and game state
         if (gameState.Date !== today.toDateString()
             || (gameState.Count === 0 && gameState.Board.length === 0 && gameState.PlacedShapes.length === 0)) {
-            setBoard(createGrid(today))
+            setBoard(createGrid(today));
             gameState.reset();
 
             // update streak - if last win date != yesterday, reset current streak
@@ -54,11 +52,7 @@ export const Game = ({setStatsDialogVisible}) => {
             setPlacedShapes(gameState.PlacedShapes);
             setRemainingShapes(ShapeNames.filter(x => !gameState.PlacedShapes.includes(x)));
         }
-    }, [])
-
-    useEffect(() => {
-        setShapes(getShapes(advancedMode));
-    }, [advancedMode]);
+    }, []);
 
     useEffect(() => {
         // if first shaped placed today, increment games played
@@ -74,67 +68,67 @@ export const Game = ({setStatsDialogVisible}) => {
                 .setPlacedShapes(placedShapes)
                 .update();
         }
-    }, [count])
+    }, [count]);
 
     const reset = () => {
         if (!winner) {
-            setBoard(createGrid(date))
-            setPlacedShapes([])
-            setRemainingShapes(ShapeNames)
-            setWinner(false)
-            setCurrentShape('')
-            winner && setCount(0)
+            setBoard(createGrid(date));
+            setPlacedShapes([]);
+            setRemainingShapes(ShapeNames());
+            setWinner(false);
+            setCurrentShape('');
+            winner && setCount(0);
         }
-    }
+    };
 
     const onWin = () => {
         // on win - set state and update stats
-        setWinner(true)
+        setWinner(true);
         statistics.onWin(date, count + 1);
         gameState.onWin();
         setStatsDialogVisible(true);
-    }
+    };
 
     const findWinner = (placedShapes) => {
         if (placedShapes.length === ShapeNames.length && remainingShapes.length === 0) {
             if (validateWinner()) {
                 onWin();
-            }       
+            }
         }
-    }
+    };
 
     const validateWinner = () => {
         const b = board;
 
         const reducedBoard = b.reduce((a, b) => {
             for (const m of b) {
-                a.push(m)
+                a.push(m);
             }
-            return a
-        }, [])
+            return a;
+        }, []);
 
         // check that the board submitted matches today's date.
         const [boardMonth, boardDate, boardDayOfWeek] = reducedBoard
             .filter(x => x[1] === -1 && x[0] !== 'dead')
-            .map(y => y[0])
+            .map(y => y[0]);
 
-        const d = new Date()
-        const currentDate = d.getDate().toString()
-        const currentMonth = Months[d.getMonth()]
-        const currentDayOfWeek = DaysOfWeek[d.getDay()]
-        const correctDate = currentMonth === boardMonth && currentDate === boardDate && currentDayOfWeek === boardDayOfWeek
+        const d = new Date();
+        const currentDate = d.getDate().toString();
+        const currentMonth = Months[d.getMonth()];
+        const currentDayOfWeek = DaysOfWeek[d.getDay()];
+        const correctDate = currentMonth === boardMonth && currentDate === boardDate && currentDayOfWeek === boardDayOfWeek;
 
         // check that the board contains all required shapes, with no duplicates.
-        let containsAllLetters = true
+        let containsAllLetters = true;
         for (const shape in SHAPES) {
-            const boardContains = reducedBoard.filter(x => x[1] === shape).length
-            const requiredSize = SHAPES[shape].size
-            containsAllLetters = containsAllLetters && requiredSize === boardContains
+            const boardContains = reducedBoard.filter(x => x[1] === shape).length;
+            const requiredSize = SHAPES[shape].size;
+            containsAllLetters = containsAllLetters && requiredSize === boardContains;
         }
 
         // check the board is the correct size
-        let boardValid = b.length === 8
-        boardValid = boardValid && reducedBoard.length === 56
+        let boardValid = b.length === 8;
+        boardValid = boardValid && reducedBoard.length === 56;
         boardValid =
             boardValid &&
             JSON.stringify(reducedBoard.map(x => x[0])) ===
@@ -142,96 +136,96 @@ export const Game = ({setStatsDialogVisible}) => {
             '"1","2","3","4","5","6","7","8","9","10",' +
             '"11","12","13","14","15","16","17","18","19","20",' +
             '"21","22","23","24","25","26","27","28","29","30","31",' +
-            '"Sun","Mon","Tues","Wed","dead","dead","dead","dead","Thurs","Fri","Sat"]'
+            '"Sun","Mon","Tues","Wed","dead","dead","dead","dead","Thurs","Fri","Sat"]';
 
-        const isValid = correctDate && containsAllLetters && boardValid
+        const isValid = correctDate && containsAllLetters && boardValid;
 
         return isValid;
-    }
+    };
 
     const placeShape = () => {
         if (!winner && currentShape) {
             setPlacedShapes(s => {
-                findWinner([...s, currentShape])
-                return [...s, currentShape]
-            })
-            setCount(count + 1)
-            setCurrentShape('')
+                findWinner([...s, currentShape]);
+                return [...s, currentShape];
+            });
+            setCount(count + 1);
+            setCurrentShape('');
         }
-    }
+    };
 
     const onSelectShape = shapeName => {
         if (!winner) {
             // add current shape back to pile
-            const remainingShapes_copy = [...remainingShapes]
+            const remainingShapes_copy = [...remainingShapes];
             if (currentShape && !placedShapes.includes(currentShape)) {
-                remainingShapes_copy.push(currentShape)
+                remainingShapes_copy.push(currentShape);
             }
 
             // set new shape
-            setCurrentShape(shapeName)
-            const i = remainingShapes_copy.findIndex(val => val === shapeName)
-            remainingShapes_copy.splice(i, 1)
-            setRemainingShapes(remainingShapes_copy)
+            setCurrentShape(shapeName);
+            const i = remainingShapes_copy.findIndex(val => val === shapeName);
+            remainingShapes_copy.splice(i, 1);
+            setRemainingShapes(remainingShapes_copy);
         }
-    }
+    };
 
     const removeShape = shapeName => {
         if (!winner) {
-            const placedShapes_copy = [...placedShapes]
-            const i = placedShapes_copy.findIndex(val => val === shapeName)
-            placedShapes_copy.splice(i, 1)
-            setPlacedShapes(placedShapes_copy)
+            const placedShapes_copy = [...placedShapes];
+            const i = placedShapes_copy.findIndex(val => val === shapeName);
+            placedShapes_copy.splice(i, 1);
+            setPlacedShapes(placedShapes_copy);
 
             if (currentShape === shapeName) {
-                const remainingShapes_copy = [...remainingShapes]
-                remainingShapes_copy.push(shapeName)
-                setRemainingShapes(remainingShapes_copy)
+                const remainingShapes_copy = [...remainingShapes];
+                remainingShapes_copy.push(shapeName);
+                setRemainingShapes(remainingShapes_copy);
             }
         }
-    }
+    };
 
     const rotate = (currentShape, dir) => {
         if (!winner && currentShape) {
-            const shapeList = { ...shapes }
-            const shape = shapeList[currentShape]
-            const matrix = shape.matrix
+            const shapeList = { ...shapes };
+            const shape = shapeList[currentShape];
+            const matrix = shape.matrix;
 
-            const x_values_rev = matrix.map((x, i) => i).reverse()
-            const length = Math.max(matrix.length, matrix[0].length)
+            const x_values_rev = matrix.map((x, i) => i).reverse();
+            const length = Math.max(matrix.length, matrix[0].length);
 
             let newMatrix = Array.from(Array(length), () => {
-                return new Array(length).fill(0)
-            })
+                return new Array(length).fill(0);
+            });
 
             matrix.forEach((row, y) => {
                 return row.forEach((val, x) => {
                     if (dir === 'vflip') {
-                        const new_Y = x_values_rev[y]
-                        newMatrix[new_Y][x] = val
+                        const new_Y = x_values_rev[y];
+                        newMatrix[new_Y][x] = val;
                     } else if (dir === 'hflip') {
-                        const new_Y = x_values_rev[x]
-                        newMatrix[y][new_Y] = val
+                        const new_Y = x_values_rev[x];
+                        newMatrix[y][new_Y] = val;
                     } else if (dir === 'right') {
-                        const new_Y = x_values_rev[y]
-                        newMatrix[x][new_Y] = val
+                        const new_Y = x_values_rev[y];
+                        newMatrix[x][new_Y] = val;
                     } else if (dir === 'left') {
-                        const new_Y = x_values_rev[x]
-                        newMatrix[new_Y][y] = val
+                        const new_Y = x_values_rev[x];
+                        newMatrix[new_Y][y] = val;
                     }
-                })
-            })
+                });
+            });
 
-            shape.matrix = newMatrix
+            shape.matrix = newMatrix;
 
-            shapeList[shape] = shape
-            setShapes(shapeList)
+            shapeList[shape] = shape;
+            setShapes(shapeList);
         }
-    }
+    };
 
     return (
         <div id={'game'}>
-            <h1 className={winner ? 'winner' : ''}>{count} moves</h1>
+            <h1 className={winner && 'winner'}>{count} moves</h1>
             <div className="boardContainer">
                 <div className="board">
                     <Board
@@ -244,7 +238,6 @@ export const Game = ({setStatsDialogVisible}) => {
                         onRemoveShape={removeShape}
                         setCurrentShape={setCurrentShape}
                         winner={winner}
-                        advancedMode={advancedMode}
                     />
                 </div>
                 <div>
@@ -291,9 +284,9 @@ export const Game = ({setStatsDialogVisible}) => {
                             setCurrentShape={onSelectShape}
                             currentShape={currentShape}
                         />
-                    )
+                    );
                 })}
             </div>
         </div>
-    )
-}
+    );
+};

@@ -69,5 +69,4 @@ export class CalendleState {
         this.setWinner(true).update();
         return this;
     }
-
 }
