@@ -11,14 +11,24 @@
     --dead-border-color: transparent;
 }
 
-
 body, html {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: #ffffff;
+    background-color: var(--background-light);
+    color: var(--text-light);
     user-select: none;
     box-sizing: border-box;
+}
+
+body.light {
+    background-color: var(--background-light);
+    color: var(--text-light);
+}
+
+body.dark {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
 }
 
 h1, h4 {
@@ -81,7 +91,7 @@ h1 {
 }
 
 .shapeColor {
-    background-color: #3d7f92;
+    background-color: var(--shape-color);
     display: flex;
     cursor: pointer;
 }
@@ -104,7 +114,7 @@ h1 {
 }
 
 .red {
-    background-color: #8d2929;
+    background-color: var(--selected-color);
 }
 
 .shapesContainer {
@@ -141,71 +151,7 @@ h1 {
 }
 
 .currentDate {
-    background: #ffc600;
-}
-
-.borderleft {
-    border-left: 1px solid black;
-}
-
-.borderright {
-    border-right: 1px solid black;
-}
-
-.bordertop {
-    border-top: 1px solid black;
-}
-
-.borderbottom {
-    border-bottom: 1px solid black;
-}
-
-.exteriorborderleft {
-    border-left: 1.5px solid black;
-}
-
-.exteriorborderright {
-    border-right: 1.5px solid black;
-}
-
-.exteriorbordertop {
-    border-top: 1.5px solid black;
-}
-
-.exteriorborderbottom {
-    border-bottom: 1.5px solid black;
-}
-
-.shapeborderleft {
-    border-left: 1px solid #3d7f92;
-}
-
-.shapeborderright {
-    border-right: 1px solid #3d7f92;
-}
-
-.shapebordertop {
-    border-top: 1px solid #3d7f92;
-}
-
-.shapeborderbottom {
-    border-bottom: 1px solid #3d7f92;
-}
-
-.deadborderleft {
-    border-left: 1px solid white;
-}
-
-.deadborderright {
-    border-right: 1px solid white;
-}
-
-.deadbordertop {
-    border-top: 1px solid white;
-}
-
-.deadborderbottom {
-    border-bottom: 1px solid white;
+    background: var(--current-date-color);
 }
 
 .winner {
@@ -235,7 +181,7 @@ button {
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    color: #000000;
+    color: var(--text-light);
     border-bottom: 1px solid #3a3a3c;
 }
 
@@ -269,20 +215,6 @@ button {
     font-size: 20px;
     cursor: pointer;
 }
-
-/* .dialog-demo .p-button {
-    margin: 0 .5rem 0 0;
-    min-width: 10rem;
-}
-
-.dialog-demo p {
-    margin: 0;
-    line-height: 1.5;
-} */
-
-/* .dialog-demo .p-dialog .p-button {
-    min-width: 6rem;
-} */
 
 .p-dialog-mask .p-dialog {
     margin: 8vw;

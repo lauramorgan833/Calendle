@@ -1,0 +1,132 @@
+
+.borderleft {
+    border-left: 1px solid var(--border-color-light);
+}
+
+.borderright {
+    border-right: 1px solid var(--border-color-light);
+}
+
+.bordertop {
+    border-top: 1px solid var(--border-color-light);
+}
+
+.borderbottom {
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.exteriorborderleft {
+    border-left: 1.5px solid var(--border-color-light);
+}
+
+.exteriorborderright {
+    border-right: 1.5px solid var(--border-color-light);
+}
+
+.exteriorbordertop {
+    border-top: 1.5px solid var(--border-color-light);
+}
+
+.exteriorborderbottom {
+    border-bottom: 1.5px solid var(--border-color-light);
+}
+
+.shapeborderleft {
+    border-left: 1px solid var(--shape-color);
+}
+
+.shapeborderright {
+    border-right: 1px solid var(--shape-color);
+}
+
+.shapebordertop {
+    border-top: 1px solid var(--shape-color);
+}
+
+.shapeborderbottom {
+    border-bottom: 1px solid var(--shape-color);
+}
+
+.deadborderleft {
+    border-left: 1px solid var(--dead-border-color);
+}
+
+.deadborderright {
+    border-right: 1px solid var(--dead-border-color);
+}
+
+.deadbordertop {
+    border-top: 1px solid var(--dead-border-color);
+}
+
+.deadborderbottom {
+    border-bottom: 1px solid var(--dead-border-color);
+}
+
+.dark {
+    .borderleft {
+        border-left: 1px solid var(--border-color-dark);
+    }
+    
+    .borderright {
+        border-right: 1px solid var(--border-color-dark);
+    }
+    
+    .bordertop {
+        border-top: 1px solid var(--border-color-dark);
+    }
+    
+    .borderbottom {
+        border-bottom: 1px solid var(--border-color-dark);
+    }
+    
+    .exteriorborderleft {
+        border-left: 1.5px solid var(--border-color-dark);
+    }
+    
+    .exteriorborderright {
+        border-right: 1.5px solid var(--border-color-dark);
+    }
+    
+    .exteriorbordertop {
+        border-top: 1.5px solid var(--border-color-dark);
+    }
+    
+    .exteriorborderbottom {
+        border-bottom: 1.5px solid var(--border-color-dark);
+    }
+    
+    .shapeborderleft {
+        border-left: 1px solid var(--shape-color);
+    }
+    
+    .shapeborderright {
+        border-right: 1px solid var(--shape-color);
+    }
+    
+    .shapebordertop {
+        border-top: 1px solid var(--shape-color);
+    }
+    
+    .shapeborderbottom {
+        border-bottom: 1px solid var(--shape-color);
+    }
+    
+    .deadborderleft {
+        border-left: 1px solid var(--dead-border-color);
+    }
+    
+    .deadborderright {
+        border-right: 1px solid var(--dead-border-color);
+    }
+    
+    .deadbordertop {
+        border-top: 1px solid var(--dead-border-color);
+    }
+    
+    .deadborderbottom {
+        border-bottom: 1px solid var(--dead-border-color);
+    }
+    
+}
+

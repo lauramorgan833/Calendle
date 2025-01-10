@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Stats } from './Stats';
+import { ThemeContext } from '../index';
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primereact/resources/primereact.css'
+import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
 
-export const Header = ({statsDialogVisible, setStatsDialogVisible}) => {
+export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
     const [helpDialogVisible, setHelpDialogVisible] = React.useState(false);
     const [settingsDialogVisible, setSettingsDialogVisible] = React.useState(false);
+    const { theme, setTheme } = useContext(ThemeContext);
+
+    const toggleTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light');
+    };
 
     return (
-        <div className='header'>
+        <header className={`header ${theme}`}>
+            <button onClick={toggleTheme}>
+                Switch to {theme === 'light' ? 'dark' : 'light'} theme
+            </button>
             <div className='left'>
                 <i className="pi pi-question-circle icon" onClick={() => setHelpDialogVisible(true)}></i>
-                
             </div>
             <div className='center'>
                 Calendle
@@ -62,7 +70,6 @@ export const Header = ({statsDialogVisible, setStatsDialogVisible}) => {
                     <p>Coming soon!</p>
                 </div>
             </Dialog>
-            
-        </div>
+        </header>
     );
-}
+};
