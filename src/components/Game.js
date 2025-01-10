@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useContext } from 'react'
 import { Board } from './Board'
 import { Shape } from './Shape'
 import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb'
-import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek } from '../lib/common'
+import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek, getShapes } from '../lib/common'
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState'
 import { AdvancedModeContext } from '../context/AdvancedModeContext';
@@ -18,7 +18,6 @@ export const Game = ({setStatsDialogVisible}) => {
     const [board, setBoard] = useState([])
     const [count, setCount] = useState(0)
     const [winner, setWinner] = useState(false)
-    const [shapes, setShapes] = useState(SHAPES)
     const [currentShape, setCurrentShape] = useState('')
     const [placedShapes, setPlacedShapes] = useState([])
     const [remainingShapes, setRemainingShapes] = useState(ShapeNames)
@@ -27,6 +26,7 @@ export const Game = ({setStatsDialogVisible}) => {
     const [statistics] = useState(new CalendleStatistics());
     const [gameState] = useState(new CalendleState());
     const { advancedMode } = useContext(AdvancedModeContext);
+    const [shapes, setShapes] = useState(getShapes(advancedMode));
 
     useEffect(() => {
         const today = new Date();
@@ -55,6 +55,10 @@ export const Game = ({setStatsDialogVisible}) => {
             setRemainingShapes(ShapeNames.filter(x => !gameState.PlacedShapes.includes(x)));
         }
     }, [])
+
+    useEffect(() => {
+        setShapes(getShapes(advancedMode));
+    }, [advancedMode]);
 
     useEffect(() => {
         // if first shaped placed today, increment games played
