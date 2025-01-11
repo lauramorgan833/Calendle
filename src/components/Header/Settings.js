@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../../index';
 import { InputSwitch } from 'primereact/inputswitch';
-import './Settings.css'; // Import the CSS file for styling
+import '../../styles/settings.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';

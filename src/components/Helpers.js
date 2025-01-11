@@ -32,7 +32,17 @@ const getCellBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
   if (val === 'dead') {
     borderClassName += isExterior || matrix[newCoord[0]][newCoord[1]] === 'dead' ? ' deadborder' + dir : ' border' + dir;
   } else {
-    borderClassName += isExterior ? ' exteriorborder' + dir : (matrix[newCoord[0]][newCoord[1]] === val ? (ShapeNames.includes(val) ? ' shapeborder' + dir : ' border' + dir) : '');
+    if (isExterior) {
+      borderClassName += ' exteriorborder' + dir;
+    } else if (ShapeNames.includes(val)) {
+      if (matrix[newCoord[0]][newCoord[1]] === val) {
+        borderClassName += ' shapeborder' + dir;
+      }
+    } else if (matrix[newCoord[0]][newCoord[1]] === 'dead') {
+      borderClassName += ' border' + dir;
+    } else {
+      borderClassName += ' border' + dir;
+    }
   }
   return borderClassName;
 };

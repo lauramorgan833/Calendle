@@ -3,7 +3,7 @@ import { Dialog } from 'primereact/dialog';
 import { Stats } from './Stats';
 import { ThemeContext } from '../../index';
 import { Settings } from './Settings';
-import './Header.css'; // Import the CSS file for styling
+import '../../styles/header.css';
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';

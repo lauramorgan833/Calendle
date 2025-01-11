@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import './styles/main.css'; // Import the CSS file
-import './styles/borders.css'; // Import the CSS file
+import './styles/main.css';
+import './styles/borders.css';
+import './styles/index.css'; // Import global styles
 import { Game } from './components/Game';
 import { Header } from './components/Header/Header';
 import { CalendleState } from './models/CalendleState';
