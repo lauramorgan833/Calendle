@@ -82,7 +82,7 @@ export const Game = ({ setStatsDialogVisible }) => {
         if (!winner) {
             setBoard(createGrid(date));
             setPlacedShapes([]);
-            setRemainingShapes(ShapeNames());
+            setRemainingShapes(ShapeNames);
             setWinner(false);
             setCurrentShape('');
             winner && setCount(0);

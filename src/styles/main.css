@@ -107,7 +107,6 @@ body.dark .selected {
 
 .rotateButton, .resetButton {
     padding: clamp(1vh, 8px, 8px) clamp(2vw, 20px, 20px);
-    font-size: min(3vh, 3vw);
     background-color: var(--button-color);
     border: none;
     border-radius: 30px;
@@ -117,6 +116,7 @@ body.dark .selected {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: clamp(16px, 2.5vw, 20px);
 }
 
 body.dark .rotateButton, body.dark .resetButton {
