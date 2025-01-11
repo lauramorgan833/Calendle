@@ -18,11 +18,6 @@
     box-sizing: border-box;
 }
 
-.cellDimensions {
-    height: min(8vw, 8vh);
-    width: min(8vw, 8vh);
-}
-
 .emptyCell {
     border: 1px solid transparent;
     height: min(8vw, 8vh);
@@ -47,6 +42,14 @@
     cursor: pointer;
 }
 
+.selected {
+    background-color: var(--selected-color);
+}
+
+body.dark .selected {
+    background-color: var(--selected-color-dark);
+}
+
 .flexDirectionRow {
     flex-direction: row;
 }
@@ -64,9 +67,6 @@
     flex-direction: column-reverse;
 }
 
-.red {
-    background-color: var(--selected-color);
-}
 
 .shapesContainer {
     display: flex;
@@ -102,17 +102,21 @@
     flex-direction: row;
     column-gap: min(1vw, 1vh);
     flex-wrap: wrap;
-    justify-content: center; /* Added to center items horizontally */
+    justify-content: center;
 }
 
-button {
-    padding: 7px 20px;
-    font-size: 20px;
+.rotateButton, .resetButton {
+    padding: clamp(1vh, 8px, 8px) clamp(2vw, 20px, 20px);
+    font-size: min(3vh, 3vw);
     background-color: var(--button-color);
     border: none;
-    border-radius: 20px;
+    border-radius: 30px;
     min-width: 75px;
-    margin-bottom: 5px;
+    margin-bottom: min(1vh, 1vw);
+}
+
+body.dark .rotateButton, body.dark .resetButton {
+    background-color: var(--button-color-dark);
 }
 
 .selectedShape {
@@ -123,6 +127,10 @@ button {
 
 .currentDate {
     background: var(--current-date-color);
+}
+
+body.dark .currentDate {
+    background: var(--current-date-color-dark); /* Ensure this selector is correct */
 }
 
 .winner {

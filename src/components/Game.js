@@ -251,19 +251,19 @@ export const Game = ({ setStatsDialogVisible }) => {
                 <div>
                     <div className="buttonContainer">
                         <div>
-                            <button onClick={reset}>Reset</button>
+                            <button className={"resetButton"} onClick={reset}>Reset</button>
                         </div>
                         <div className="rotateButtons">
-                            <button onClick={() => rotate(currentShape, 'left')}>
+                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'left')}>
                                 <TbRotateClockwise2 style={{ transform: 'scaleY(-1)' }} />
                             </button>
-                            <button onClick={() => rotate(currentShape, 'vflip')}>
+                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'vflip')}>
                                 <TbArrowsVertical />
                             </button>
-                            <button onClick={() => rotate(currentShape, 'hflip')}>
+                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'hflip')}>
                                 <TbArrowsHorizontal />
                             </button>
-                            <button onClick={() => rotate(currentShape, 'right')}>
+                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'right')}>
                                 <TbRotateClockwise2 />
                             </button>
                         </div>

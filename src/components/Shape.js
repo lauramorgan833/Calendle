@@ -19,7 +19,7 @@ export const Shape = props => {
     const matrix = shape.matrix
 
     return (
-        <div key={shapeName} className={'shape '}>
+        <div key={shapeName} className={'shape'}>
             {matrix.map((row, x) => {
                 return (
                     <div key={'row_' + x} className={'shapeRow'}>

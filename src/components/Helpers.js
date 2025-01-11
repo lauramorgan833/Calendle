@@ -37,6 +37,8 @@ const getCellBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
     } else if (ShapeNames.includes(val)) {
       if (matrix[newCoord[0]][newCoord[1]] === val) {
         borderClassName += ' shapeborder' + dir;
+      } else {
+        borderClassName += ' border' + dir;
       }
     } else if (matrix[newCoord[0]][newCoord[1]] === 'dead') {
       borderClassName += ' border' + dir;
@@ -53,16 +55,17 @@ const getShapeBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
 };
 
 export const getShapeClassName = (matrix, val, x, y, isSelected) => {
-  const borderClassName = getBorderClassName(matrix, val, x, y, 'SHAPE');
+  const shapeClassName = 'cell';
+  const borderClassName = getBorderClassName(matrix, val, x, y, 'SHAPE').trim();
   const colorClassName = ShapeNames.includes(val) ? 'shapeColor' : '';
-  const selectedClassName = val && isSelected ? 'red' : '';
-  return ['cellDimensions', borderClassName, colorClassName, selectedClassName].join(' ');
+  const selectedClassName = val && isSelected ? 'selected' : '';
+  return [shapeClassName, selectedClassName, borderClassName, colorClassName].join(' ').trim();
 };
 
 export const getCellClassName = (matrix, val, x, y, isCurrentDateCell) => {
   if (!isCurrentDateCell && val === -1) return 'emptyCell';
   const cellClassName = isCurrentDateCell ? 'cell currentDate' : 'cell';
-  const borderClassName = getBorderClassName(matrix, val, x, y, 'CELL');
+  const borderClassName = getBorderClassName(matrix, val, x, y, 'CELL').trim();
   const colorClassName = ShapeNames.includes(val) ? 'shapeColor' : '';
-  return ['cellDimensions', cellClassName, borderClassName, colorClassName].join(' ');
+  return [cellClassName, borderClassName, colorClassName].join(' ').trim();
 };

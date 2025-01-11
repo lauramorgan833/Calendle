@@ -5,12 +5,15 @@
     --text-dark: white;
     --shape-color: #3d7f92;
     --selected-color: #8d2929;
+    --selected-color-dark: #A83C3C;
     --current-date-color: #ffc600;
+    --current-date-color-dark: #be9200;
     --border-color-light: #222222;
     --border-color-dark: #ECEFF1;
     --dead-border-color: transparent;
     --winner-color: #147f14;
-    --button-color: #DDDDDD
+    --button-color: #DDDDDD;
+    --button-color-dark: #999999  ;
 }
 
 body, html {
