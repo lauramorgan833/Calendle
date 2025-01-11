@@ -253,7 +253,7 @@ export const Game = ({ setStatsDialogVisible }) => {
                         <div>
                             <button onClick={reset}>Reset</button>
                         </div>
-                        <div>
+                        <div className="rotateButtons">
                             <button onClick={() => rotate(currentShape, 'left')}>
                                 <TbRotateClockwise2 style={{ transform: 'scaleY(-1)' }} />
                             </button>
