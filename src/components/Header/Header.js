@@ -12,11 +12,7 @@ import 'primeicons/primeicons.css';
 export const Header = ({ statsDialogVisible, setStatsDialogVisible }) => {
     const [helpDialogVisible, setHelpDialogVisible] = React.useState(false);
     const [settingsDialogVisible, setSettingsDialogVisible] = React.useState(false);
-    const { theme, setTheme } = useContext(ThemeContext);
-
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
-    };
+    const { theme } = useContext(ThemeContext);
 
     return (
         <header className={`header ${theme}`}>

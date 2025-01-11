@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Board } from './Board';
 import { Shape } from './Shape';
 import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb';
@@ -22,7 +22,7 @@ export const Game = ({ setStatsDialogVisible }) => {
     const [placedShapes, setPlacedShapes] = useState([]);
     const [shapes, setShapes] = useState(SHAPES);
     const [remainingShapes, setRemainingShapes] = useState(ShapeNames);
-    const { theme, setTheme } = useContext(ThemeContext);
+    const { setTheme } = useContext(ThemeContext);
 
     // create empty objects
     const [statistics] = useState(new CalendleStatistics());

@@ -8,8 +8,8 @@
     "game"
   ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "run": "npm start",
@@ -20,6 +20,12 @@
     "node": ">=10"
   },
   "dependencies": {
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^24.0.0",
+    "babel-loader": "^8.0.0",
+    "babel-preset-react-app": "^9.0.0",
+    "jest": "^24.0.0",
+    "postcss": "^7.0.0",
     "prettier": "latest",
     "primeicons": "^5.0.0",
     "primereact": "^8.3.0",
@@ -27,15 +33,10 @@
     "react-dom": "^18.0.0",
     "react-icons": "^4.4.0",
     "react-scripts": "3.0.1",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.0.0",
-    "babel-loader": "^8.0.0",
-    "babel-preset-react-app": "^9.0.0",
-    "jest": "^24.0.0",
-    "postcss": "^7.0.0",
     "webpack": "^4.0.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3"
   },
   "browserslist": {
     "production": [
