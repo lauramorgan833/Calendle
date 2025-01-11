@@ -58,6 +58,7 @@ export const Game = ({ setStatsDialogVisible }) => {
             setPlacedShapes(gameState.PlacedShapes);
             setRemainingShapes(ShapeNames.filter(x => !gameState.PlacedShapes.includes(x)));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -74,6 +75,7 @@ export const Game = ({ setStatsDialogVisible }) => {
                 .setPlacedShapes(placedShapes)
                 .update();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [count]);
 
     const reset = () => {
