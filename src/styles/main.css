@@ -113,10 +113,15 @@ body.dark .selected {
     border-radius: 30px;
     min-width: 75px;
     margin-bottom: min(1vh, 1vw);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 body.dark .rotateButton, body.dark .resetButton {
     background-color: var(--button-color-dark);
+    color: var(--text-dark); /* Added for dark mode */
 }
 
 .selectedShape {
