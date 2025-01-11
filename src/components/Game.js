@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Board } from './Board';
 import { Shape } from './Shape';
 import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb';
-import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek} from '../lib/common';
+import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek } from '../lib/common';
 import { ThemeContext } from '..';
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState';
@@ -37,7 +37,7 @@ export const Game = ({ setStatsDialogVisible }) => {
         gameState.initialize();
 
         if (gameState.DarkMode) {
-            setTheme(gameState.DarkMode)
+            setTheme(gameState.DarkMode);
         }
 
         // if new day or empty board - reset game board and game state
@@ -232,7 +232,7 @@ export const Game = ({ setStatsDialogVisible }) => {
     };
 
     return (
-        <div id={'game'}>
+        <div id={'game'} style={{ minHeight: '100vh' }}>
             <h1 className={winner && 'winner'}>{count} moves</h1>
             <div className="boardContainer">
                 <div className="board">
