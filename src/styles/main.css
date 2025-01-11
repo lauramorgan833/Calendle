@@ -31,14 +31,12 @@
 
 .shape {
     display: flex;
-    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
 }
 
 .shapeRow {
     display: flex;
-    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row;
 }
@@ -95,12 +93,16 @@
     row-gap: min(3vw, 3vh);
     width: 28vw;
     min-width: 12vh;
+    justify-content: center; /* Added to center items horizontally */
+    align-items: center; /* Added to center items horizontally */
 }
 
 .rotateButtons {
     display: flex;
     flex-direction: row;
     column-gap: min(1vw, 1vh);
+    flex-wrap: wrap;
+    justify-content: center; /* Added to center items horizontally */
 }
 
 button {
@@ -110,6 +112,7 @@ button {
     border: none;
     border-radius: 20px;
     min-width: 75px;
+    margin-bottom: 5px;
 }
 
 .selectedShape {
