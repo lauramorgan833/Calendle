@@ -15,35 +15,35 @@
 }
 
 .exteriorborderleft {
-    border-left: 1.5px solid var(--border-color-light);
+    border-left: 2px solid var(--border-color-light);
 }
 
 .exteriorborderright {
-    border-right: 1.5px solid var(--border-color-light);
+    border-right: 2px solid var(--border-color-light);
 }
 
 .exteriorbordertop {
-    border-top: 1.5px solid var(--border-color-light);
+    border-top: 2px solid var(--border-color-light);
 }
 
 .exteriorborderbottom {
-    border-bottom: 1.5px solid var(--border-color-light);
+    border-bottom: 2px solid var(--border-color-light);
 }
 
 .shapeborderleft {
-    border-left: 1px solid var(--shape-color);
+    border-left: none;
 }
 
 .shapeborderright {
-    border-right: 1px solid var(--shape-color);
+    border-right: none;
 }
 
 .shapebordertop {
-    border-top: 1px solid var(--shape-color);
+    border-top: none;
 }
 
 .shapeborderbottom {
-    border-bottom: 1px solid var(--shape-color);
+    border-bottom: none;
 }
 
 .selected.shapeborderleft {
