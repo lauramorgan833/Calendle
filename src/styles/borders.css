@@ -96,19 +96,19 @@
     }
     
     .exteriorborderleft {
-        border-left: 1.5px solid var(--border-color-dark);
+        border-left: 2px solid var(--border-color-dark);
     }
     
     .exteriorborderright {
-        border-right: 1.5px solid var(--border-color-dark);
+        border-right: 2px solid var(--border-color-dark);
     }
     
     .exteriorbordertop {
-        border-top: 1.5px solid var(--border-color-dark);
+        border-top: 2px solid var(--border-color-dark);
     }
     
     .exteriorborderbottom {
-        border-bottom: 1.5px solid var(--border-color-dark);
+        border-bottom: 2px solid var(--border-color-dark);
     }
     
     .shapeborderleft {
@@ -144,19 +144,19 @@
     }
 
     .deadborderleft {
-        border-left: 1px solid var(--dead-border-color);
+        border-left: none;
     }
     
     .deadborderright {
-        border-right: 1px solid var(--dead-border-color);
+        border-right: none;
     }
     
     .deadbordertop {
-        border-top: 1px solid var(--dead-border-color);
+        border-top: none;
     }
     
     .deadborderbottom {
-        border-bottom: 1px solid var(--dead-border-color);
+        border-bottom: none;
     }
     
 }
