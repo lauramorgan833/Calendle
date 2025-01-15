@@ -30,14 +30,12 @@ const getBorderClassName = (matrix, val, x, y, type) => {
 const getCellBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
   let borderClassName = '';
   if (val === 'dead') {
-    borderClassName += isExterior || matrix[newCoord[0]][newCoord[1]] === 'dead' ? ' deadborder' + dir : ' border' + dir;
+    borderClassName += isExterior || matrix[newCoord[0]][newCoord[1]] === 'dead' ? '' : ' border' + dir;
   } else {
     if (isExterior) {
       borderClassName += ' exteriorborder' + dir;
     } else if (ShapeNames.includes(val)) {
-      if (matrix[newCoord[0]][newCoord[1]] === val) {
-        borderClassName += ' shapeborder' + dir;
-      } else {
+      if (matrix[newCoord[0]][newCoord[1]] !== val) {
         borderClassName += ' border' + dir;
       }
     } else if (matrix[newCoord[0]][newCoord[1]] === 'dead') {
@@ -55,7 +53,7 @@ const getShapeBorderClassName = (matrix, val, dir, newCoord, isExterior) => {
 };
 
 export const getShapeClassName = (matrix, val, x, y, isSelected) => {
-  const shapeClassName = 'cell';
+  const shapeClassName = 'cell shapeCell';
   const borderClassName = getBorderClassName(matrix, val, x, y, 'SHAPE').trim();
   const colorClassName = ShapeNames.includes(val) ? 'shapeColor' : '';
   const selectedClassName = val && isSelected ? 'selected' : '';

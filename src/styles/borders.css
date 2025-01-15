@@ -31,19 +31,19 @@
 }
 
 .shapeborderleft {
-    border-left: none;
+    border-left: 1px solid var(--shape-color);
 }
 
 .shapeborderright {
-    border-right: none;
+    border-right: 1px solid var(--shape-color);
 }
 
 .shapebordertop {
-    border-top: none;
+    border-top: 1px solid var(--shape-color);
 }
 
 .shapeborderbottom {
-    border-bottom: none;
+    border-bottom: 1px solid var(--shape-color);
 }
 
 .selected.shapeborderleft {
@@ -60,22 +60,6 @@
 
 .selected.shapeborderbottom {
     border-bottom: 1px solid var(--selected-color) !important; /* Added !important */
-}
-
-.deadborderleft {
-    border-left: none;
-}
-
-.deadborderright {
-    border-right: none;
-}
-
-.deadbordertop {
-    border-top: none;
-}
-
-.deadborderbottom {
-    border-bottom: none;
 }
 
 .dark {
@@ -112,36 +96,35 @@
     }
     
     .shapeborderleft {
-        border-left: none;
+        border-left: 1px solid var(--shape-color-dark);
     }
     
     .shapeborderright {
-        border-right: none;
+        border-right: 1px solid var(--shape-color-dark);
     }
     
     .shapebordertop {
-        border-top: none;
+        border-top: 1px solid var(--shape-color-dark);
     }
     
     .shapeborderbottom {
-        border-bottom: none;
-    }
-
-    .deadborderleft {
-        border-left: none;
+        border-bottom: 1px solid var(--shape-color-dark);
     }
     
-    .deadborderright {
-        border-right: none;
+    .selected.shapeborderleft {
+        border-left: 1px solid var(--selected-color-dark) !important; /* Added !important */
     }
     
-    .deadbordertop {
-        border-top: none;
+    .selected.shapeborderright {
+        border-right: 1px solid var(--selected-color-dark) !important; /* Added !important */
     }
     
-    .deadborderbottom {
-        border-bottom: none;
+    .selected.shapebordertop {
+        border-top: 1px solid var(--selected-color-dark) !important; /* Added !important */
     }
     
+    .selected.shapeborderbottom {
+        border-bottom: 1px solid var(--selected-color-dark) !important; /* Added !important */
+    }    
 }
 

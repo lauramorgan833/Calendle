@@ -18,6 +18,10 @@
     box-sizing: border-box;
 }
 
+.shapeCell {
+    margin: -1px;
+}
+
 .emptyCell {
     border: 1px solid transparent;
     height: min(8vw, 8vh);
