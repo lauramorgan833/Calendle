@@ -83,7 +83,6 @@ export const Game = ({ setStatsDialogVisible }) => {
         // when shape is placed, update game state
         if (count > 0 && gameState.Count !== count) {
             gameState.incrementCount()
-                .setWinner(winner)
                 .setBoard(board)
                 .setPlacedShapes(placedShapes)
                 .update();
@@ -97,6 +96,13 @@ export const Game = ({ setStatsDialogVisible }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [count, placedShapes]);
+
+    useEffect(() => {
+        if (placedShapes.length > 0) {
+            findWinner(placedShapes);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [placedShapes]);
 
     const reset = () => {
         if (!winner) {
@@ -173,10 +179,7 @@ export const Game = ({ setStatsDialogVisible }) => {
 
     const placeShape = () => {
         if (!winner && currentShape) {
-            setPlacedShapes(s => {
-                findWinner([...s, currentShape]);
-                return [...s, currentShape];
-            });
+            setPlacedShapes([...placedShapes, currentShape]);
             const remainingShapes_copy = [...remainingShapes];
             const i = remainingShapes_copy.findIndex(val => val === currentShape);
             remainingShapes_copy.splice(i, 1);
