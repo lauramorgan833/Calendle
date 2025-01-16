@@ -23,10 +23,23 @@ export const Game = ({ setStatsDialogVisible }) => {
     const [shapes, setShapes] = useState(SHAPES);
     const [remainingShapes, setRemainingShapes] = useState(ShapeNames);
     const { setTheme } = useContext(ThemeContext);
+    const [isLandscape, setIsLandscape] = useState(window.innerWidth > window.innerHeight);
 
     // create empty objects
     const [statistics] = useState(new CalendleStatistics());
     const [gameState] = useState(new CalendleState());
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLandscape(window.innerWidth > window.innerHeight);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const today = new Date();
@@ -52,7 +65,7 @@ export const Game = ({ setStatsDialogVisible }) => {
             }
         } else {
             // set board, count, winner from gameState
-            setBoard(gameState.Board);
+            setBoard(gameState.Board.length > 0 ? gameState.Board : createGrid(today));
             setCount(gameState.Count);
             setWinner(gameState.Winner);
             setPlacedShapes(gameState.PlacedShapes);
@@ -67,7 +80,7 @@ export const Game = ({ setStatsDialogVisible }) => {
             statistics.incrementGamesPlayed().update();
         }
 
-        // when shape is placed, if the count has increased, update game state
+        // when shape is placed, update game state
         if (count > 0 && gameState.Count !== count) {
             gameState.incrementCount()
                 .setWinner(winner)
@@ -75,8 +88,15 @@ export const Game = ({ setStatsDialogVisible }) => {
                 .setPlacedShapes(placedShapes)
                 .update();
         }
+        // update game state if piece is removed
+        else if ( count > 0 && placedShapes.length !== gameState.PlacedShapes.length) {
+            gameState.setWinner(winner)
+                .setBoard(board)
+                .setPlacedShapes(placedShapes)
+                .update();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [count]);
+    }, [count, placedShapes]);
 
     const reset = () => {
         if (!winner) {
@@ -157,6 +177,10 @@ export const Game = ({ setStatsDialogVisible }) => {
                 findWinner([...s, currentShape]);
                 return [...s, currentShape];
             });
+            const remainingShapes_copy = [...remainingShapes];
+            const i = remainingShapes_copy.findIndex(val => val === currentShape);
+            remainingShapes_copy.splice(i, 1);
+            setRemainingShapes(remainingShapes_copy);
             setCount(count + 1);
             setCurrentShape('');
         }
@@ -164,17 +188,9 @@ export const Game = ({ setStatsDialogVisible }) => {
 
     const onSelectShape = shapeName => {
         if (!winner) {
-            // add current shape back to pile
-            const remainingShapes_copy = [...remainingShapes];
-            if (currentShape && !placedShapes.includes(currentShape)) {
-                remainingShapes_copy.push(currentShape);
-            }
 
             // set new shape
             setCurrentShape(shapeName);
-            const i = remainingShapes_copy.findIndex(val => val === shapeName);
-            remainingShapes_copy.splice(i, 1);
-            setRemainingShapes(remainingShapes_copy);
         }
     };
 
@@ -185,11 +201,10 @@ export const Game = ({ setStatsDialogVisible }) => {
             placedShapes_copy.splice(i, 1);
             setPlacedShapes(placedShapes_copy);
 
-            if (currentShape === shapeName) {
-                const remainingShapes_copy = [...remainingShapes];
-                remainingShapes_copy.push(shapeName);
-                setRemainingShapes(remainingShapes_copy);
-            }
+            const remainingShapes_copy = [...remainingShapes];
+            remainingShapes_copy.push(shapeName);
+            setRemainingShapes(remainingShapes_copy);
+            setCurrentShape('');
         }
     };
 
@@ -232,7 +247,7 @@ export const Game = ({ setStatsDialogVisible }) => {
     };
 
     return (
-        <div id={'game'} style={{ minHeight: '100vh' }}>
+        <div id={'game'} className='game'>
             <h1 className={winner && 'winner'}>{count} moves</h1>
             <div className="boardContainer">
                 <div className="board">
@@ -248,7 +263,7 @@ export const Game = ({ setStatsDialogVisible }) => {
                         winner={winner}
                     />
                 </div>
-                <div>
+                <div className="rightContentContainer">
                     <div className="buttonContainer">
                         <div>
                             <button className={"resetButton"} onClick={reset}>Reset</button>
@@ -267,22 +282,25 @@ export const Game = ({ setStatsDialogVisible }) => {
                                 <TbRotateClockwise2 />
                             </button>
                         </div>
-                        <div className="selectedShape">
-                            {currentShape && (
+                    </div>
+                    {isLandscape && <div className="shapesContainer">
+                        {remainingShapes.map(name => {
+                            return (
                                 <Shape
+                                    key={name}
                                     shapes={shapes}
-                                    shapeName={currentShape}
-                                    setCurrentShape={setCurrentShape}
-                                    setRemainingShapes={setRemainingShapes}
+                                    shapeName={name}
+                                    setCurrentShape={onSelectShape}
                                     currentShape={currentShape}
                                 />
-                            )}
-                        </div>
+                            );
+                        })}
                     </div>
+                    }
                 </div>
             </div>
 
-            <div className="shapesContainer">
+            {!isLandscape && <div className="shapesContainer">
                 {remainingShapes.map(name => {
                     return (
                         <Shape
@@ -295,6 +313,7 @@ export const Game = ({ setStatsDialogVisible }) => {
                     );
                 })}
             </div>
+            }
         </div>
     );
 };
