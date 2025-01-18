@@ -104,6 +104,28 @@ export const Game = ({ setStatsDialogVisible }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [placedShapes]);
 
+    useEffect(() => {
+        (async () => {
+            try {
+                let response = await fetch("/.netlify/functions/get_movies");
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                let results = await response.json();
+                if (!results) {
+                    throw new Error("Response was undefined");
+                }
+                results.forEach(result => {
+                    const listItem = document.createElement("li");
+                    listItem.innerText = result.title;
+                    document.getElementById("movies").appendChild(listItem);
+                });
+            } catch (error) {
+                console.error("Fetch error: ", error);
+            }
+        })();
+    }, []);
+
     const reset = () => {
         if (!winner) {
             setBoard(createGrid(date));
@@ -302,6 +324,7 @@ export const Game = ({ setStatsDialogVisible }) => {
                     }
                 </div>
             </div>
+            <ul id="movies"></ul>
 
             {!isLandscape && <div className="shapesContainer">
                 {remainingShapes.map(name => {
