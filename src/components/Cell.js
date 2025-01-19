@@ -1,5 +1,5 @@
 import React from 'react'
-import { getCellClassName } from './Helpers'
+import { getCellClassName } from '../utils/borderClassNames'
 import { DaysOfWeek, Months } from '../lib/common'
 
 export const Cell = ({ value, coord, onClickEmptyCell, board, date }) => {

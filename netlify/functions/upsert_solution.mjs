@@ -21,20 +21,30 @@ export const handler = async (event, context) => {
 
         let currentSolution = '';
 
-        try {
-            console.log("Checking for existing solution");
-            currentSolution = await collection.findOne({date: date.toString()});
-        } catch (error) {
-            console.log("Error: ", error.toString());
-        }
+        currentSolution = await collection.findOne({date: date.toString()});
+
         console.log("Current Solution: ", currentSolution);
         let result = {};
         if (currentSolution) {
+            // if current solution is already logged, do not add it
+            if (deepCompareArrays) {
+                const array = currentSolution.solutions || [];
+                const exists = array.some(sol => deepCompareArrays(sol, board));
+                if (exists) {
+                    console.log("Solution already exists");
+                    return {
+                        statusCode: 200,
+                        body: JSON.stringify({ message: "Solution already exists" }),
+                    };
+                }
+            }
+
             console.log("Updating existing solution");
             result = await collection.updateOne(
                 { date: date.toString() },
                 { $push: { solutions: board } }
             );
+
         } else {
             console.log("Inserting new solution");
             result = await collection.insertOne({date: date.toString(), solutions: [board]});
@@ -48,4 +58,35 @@ export const handler = async (event, context) => {
         console.log("Error: ", error.toString());
         return { statusCode: 500, body: error.toString() }
     }
+}
+
+const deepCompareArrays = (arr1, arr2) => {
+    // Check if both arguments are arrays
+    if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
+        throw new Error("Both arguments must be arrays");
+    }
+
+    // Check if lengths are different
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    // Compare each element
+    for (let i = 0; i < arr1.length; i++) {
+        const el1 = arr1[i];
+        const el2 = arr2[i];
+
+        // Check if both elements are arrays
+        if (Array.isArray(el1) && Array.isArray(el2)) {
+            // Recursively compare nested arrays
+            if (!deepCompareArrays(el1, el2)) {
+                return false;
+            }
+        } else if (el1 !== el2) {
+            // Compare primitive values
+            return false;
+        }
+    }
+
+    return true; // All elements matched
 }

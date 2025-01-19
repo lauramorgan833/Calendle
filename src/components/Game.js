@@ -6,7 +6,7 @@ import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek } from '../lib/commo
 import { ThemeContext } from '..';
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState';
-import { upsert_solution } from '../api/dbFunctions';
+import { upsert_solution } from '../api/mongodb/upsert_solution.js';
 
 const getYesterdayDateString = (today) => {
     const yesterday = new Date(today);

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { getShapeClassName } from './Helpers'
+import { getShapeClassName } from '../utils/borderClassNames'
 
 export const Shape = props => {
     const shapes = props.shapes
