@@ -99,7 +99,7 @@ export const Game = ({ setStatsDialogVisible }) => {
     }, [count, placedShapes]);
 
     useEffect(() => {
-        if (placedShapes.length > 0) {
+        if (!winner && placedShapes.length > 0) {
             findWinner(placedShapes);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,7 +119,7 @@ export const Game = ({ setStatsDialogVisible }) => {
     const onWin = () => {
         // on win - set state and update stats
         setWinner(true);
-        statistics.onWin(date, count + 1);
+        statistics.onWin(date, count);
         gameState.onWin();
         setStatsDialogVisible(true);
         upsert_solution(date.toDateString(), board);
