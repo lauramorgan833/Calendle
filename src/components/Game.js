@@ -6,6 +6,7 @@ import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek } from '../lib/commo
 import { ThemeContext } from '..';
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState';
+import { upsert_solution } from '../api/dbFunctions';
 
 const getYesterdayDateString = (today) => {
     const yesterday = new Date(today);
@@ -104,28 +105,6 @@ export const Game = ({ setStatsDialogVisible }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [placedShapes]);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                let response = await fetch("/.netlify/functions/get_movies");
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                let results = await response.json();
-                if (!results) {
-                    throw new Error("Response was undefined");
-                }
-                results.forEach(result => {
-                    const listItem = document.createElement("li");
-                    listItem.innerText = result.title;
-                    document.getElementById("movies").appendChild(listItem);
-                });
-            } catch (error) {
-                console.error("Fetch error: ", error);
-            }
-        })();
-    }, []);
-
     const reset = () => {
         if (!winner) {
             setBoard(createGrid(date));
@@ -143,6 +122,7 @@ export const Game = ({ setStatsDialogVisible }) => {
         statistics.onWin(date, count + 1);
         gameState.onWin();
         setStatsDialogVisible(true);
+        upsert_solution(date.toDateString(), board);
     };
 
     const findWinner = (placedShapes) => {
