@@ -1,3 +1,4 @@
+import { DateModel as Date } from './models/DateModel';
 import React, { createContext, useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles/main.css';
@@ -10,7 +11,7 @@ import { CalendleState } from './models/CalendleState';
 export const ThemeContext = createContext();
 
 const Home = () => {
-    const date = new Date();
+    const date = Date.today();
     const [statsDialogVisible, setStatsDialogVisible] = React.useState(false);
     const [theme, setTheme] = useState('light');
     const [gameState] = useState(new CalendleState());
@@ -29,7 +30,7 @@ const Home = () => {
     return (
         <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme }}>
             <Header statsDialogVisible={statsDialogVisible} setStatsDialogVisible={setStatsDialogVisible} />
-            <Game key={date.toDateString()} setStatsDialogVisible={setStatsDialogVisible}/>
+            <Game key={date.toString()} setStatsDialogVisible={setStatsDialogVisible} />
         </ThemeContext.Provider>
     );
 };

@@ -1,4 +1,5 @@
-import { DaysOfWeek, Months, SHAPES } from '../../lib/common'
+import { DateModel as Date } from '../../models/DateModel';
+import { SHAPES } from '../../lib/common';
 
 export default function date(req, res) {
     const b = req.body.board
@@ -15,10 +16,10 @@ export default function date(req, res) {
         .filter(x => x[1] === -1 && x[0] !== 'dead')
         .map(y => y[0])
 
-    const d = new Date()
-    const currentDate = d.getDate().toString()
-    const currentMonth = Months[d.getMonth()]
-    const currentDayOfWeek = DaysOfWeek[d.getDay()]
+    const date = Date.today();
+    const currentDate = date.getDateString();
+    const currentMonth = date.getMonthString();
+    const currentDayOfWeek = date.getDayOfWeekString();
     const correctDate = currentMonth === boardMonth && currentDate === boardDate && currentDayOfWeek === boardDayOfWeek
 
     // check that the board contains all required shapes, with no duplicates.
@@ -35,11 +36,11 @@ export default function date(req, res) {
     boardValid =
         boardValid &&
         JSON.stringify(reducedBoard.map(x => x[0])) ===
-            '["Jan","Feb","Mar","Apr","May","Jun","dead","Jul","Aug","Sep","Oct","Nov","Dec","dead",' +
-                '"1","2","3","4","5","6","7","8","9","10",' +
-                '"11","12","13","14","15","16","17","18","19","20",' +
-                '"21","22","23","24","25","26","27","28","29","30","31",' +
-                '"Sun","Mon","Tues","Wed","dead","dead","dead","dead","Thurs","Fri","Sat"]'
+        '["Jan","Feb","Mar","Apr","May","Jun","dead","Jul","Aug","Sep","Oct","Nov","Dec","dead",' +
+        '"1","2","3","4","5","6","7","8","9","10",' +
+        '"11","12","13","14","15","16","17","18","19","20",' +
+        '"21","22","23","24","25","26","27","28","29","30","31",' +
+        '"Sun","Mon","Tues","Wed","dead","dead","dead","dead","Thurs","Fri","Sat"]'
 
     const confirmed = correctDate && containsAllLetters && boardValid
 

@@ -1,21 +1,21 @@
+import { DateModel as Date, DAYSOFWEEK, MONTHS } from '../models/DateModel';
 import React, { useEffect, useState, useContext } from 'react';
 import { Board } from './Board';
 import { Shape } from './Shape';
 import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb';
-import { createGrid, ShapeNames, SHAPES, Months, DaysOfWeek } from '../lib/common';
+import { createGrid, ShapeNames, SHAPES } from '../lib/common';
 import { ThemeContext } from '..';
 import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState';
 import { upsert_solution } from '../api/mongodb/upsert_solution.js';
 
 const getYesterdayDateString = (today) => {
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    return yesterday.toDateString();
+    const date = today instanceof Date ? today : new Date(today);
+    return date.addDays(-1).toString();
 };
 
 export const Game = ({ setStatsDialogVisible }) => {
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(Date.today());
     const [board, setBoard] = useState([]);
     const [count, setCount] = useState(0);
     const [winner, setWinner] = useState(false);
@@ -43,7 +43,7 @@ export const Game = ({ setStatsDialogVisible }) => {
     }, []);
 
     useEffect(() => {
-        const today = new Date();
+        const today = Date.today();
         setDate(today);
 
         // initialize from LocalStorage
@@ -55,9 +55,9 @@ export const Game = ({ setStatsDialogVisible }) => {
         }
 
         // if new day or empty board - reset game board and game state
-        if (gameState.Date !== today.toDateString()
+        if (!Date.equal(gameState.Date)
             || (gameState.Count === 0 && gameState.Board.length === 0 && gameState.PlacedShapes.length === 0)) {
-            setBoard(createGrid(today));
+            setBoard(createGrid());
             gameState.reset();
 
             // update streak - if last win date != yesterday, reset current streak
@@ -66,7 +66,7 @@ export const Game = ({ setStatsDialogVisible }) => {
             }
         } else {
             // set board, count, winner from gameState
-            setBoard(gameState.Board.length > 0 ? gameState.Board : createGrid(today));
+            setBoard(gameState.Board.length > 0 ? gameState.Board : createGrid());
             setCount(gameState.Count);
             setWinner(gameState.Winner);
             setPlacedShapes(gameState.PlacedShapes);
@@ -89,7 +89,7 @@ export const Game = ({ setStatsDialogVisible }) => {
                 .update();
         }
         // update game state if piece is removed
-        else if ( count > 0 && placedShapes.length !== gameState.PlacedShapes.length) {
+        else if (count > 0 && placedShapes.length !== gameState.PlacedShapes.length) {
             gameState.setWinner(winner)
                 .setBoard(board)
                 .setPlacedShapes(placedShapes)
@@ -107,7 +107,7 @@ export const Game = ({ setStatsDialogVisible }) => {
 
     const reset = () => {
         if (!winner) {
-            setBoard(createGrid(date));
+            setBoard(createGrid());
             setPlacedShapes([]);
             setRemainingShapes(ShapeNames);
             setWinner(false);
@@ -122,7 +122,7 @@ export const Game = ({ setStatsDialogVisible }) => {
         statistics.onWin(date, count);
         gameState.onWin();
         setStatsDialogVisible(true);
-        upsert_solution(date.toDateString(), board);
+        upsert_solution(date.toString(), board);
     };
 
     const findWinner = (placedShapes) => {
@@ -148,10 +148,10 @@ export const Game = ({ setStatsDialogVisible }) => {
             .filter(x => x[1] === -1 && x[0] !== 'dead')
             .map(y => y[0]);
 
-        const d = new Date();
-        const currentDate = d.getDate().toString();
-        const currentMonth = Months[d.getMonth()];
-        const currentDayOfWeek = DaysOfWeek[d.getDay()];
+        const date = Date.today();
+        const currentDate = date.getDateString();
+        const currentMonth = date.getMonthString();
+        const currentDayOfWeek = date.getDayOfWeekString();
         const correctDate = currentMonth === boardMonth && currentDate === boardDate && currentDayOfWeek === boardDayOfWeek;
 
         // check that the board contains all required shapes, with no duplicates.
