@@ -1,3 +1,4 @@
+import { DateModel as Date } from './DateModel';
 const Default = 0;
 const STORAGE_KEY = 'calendle-state';
 
@@ -25,12 +26,12 @@ export class CalendleState {
     get DarkMode() { return this._darkMode; }
 
     // setters
-    setDate(val) { this._date = val; return this;}
-    incrementCount() { this._count = this._count + 1; return this;}
-    setWinner(val) { this._winner = val; return this;}
-    setBoard(val) { this._board = val; return this;}
-    setPlacedShapes(val) { this._placedShapes = val; return this;}
-    setDarkMode(val) { this._darkMode = val; return this;}
+    setDate(val) { this._date = val; return this; }
+    incrementCount() { this._count = this._count + 1; return this; }
+    setWinner(val) { this._winner = val; return this; }
+    setBoard(val) { this._board = val; return this; }
+    setPlacedShapes(val) { this._placedShapes = val; return this; }
+    setDarkMode(val) { this._darkMode = val; return this; }
 
     // initializes object with data from LocalStorage
     initialize() {
@@ -48,7 +49,7 @@ export class CalendleState {
 
     // get empty object
     getEmptyState() {
-        this._date = new Date().toDateString();
+        this._date = Date.toString();
         this._count = 0;
         this._winner = false;
         this._board = [];
