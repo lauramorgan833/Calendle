@@ -9,7 +9,8 @@
       "webRoot": "${workspaceFolder}/src",
       "sourceMaps": true,
       "trace": true,
-      "userDataDir": "${workspaceFolder}/.vscode/chrome"
+      "userDataDir": "${workspaceFolder}/.vscode/chrome",
+      "preLaunchTask": "npm: build"
     }
   ]
 }

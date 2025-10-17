@@ -1,11 +1,12 @@
+import { DateModel as Date } from '../models/DateModel';
 import React from 'react'
 import { getCellClassName } from '../utils/borderClassNames'
-import { DaysOfWeek, Months } from '../lib/common'
 
-export const Cell = ({ value, coord, onClickEmptyCell, board, date }) => {
-    const currentDate = date.getDate().toString()
-    const currentMonth = Months[date.getMonth()]
-    const currentDayOfWeek = DaysOfWeek[date.getDay()]
+export const Cell = ({ value, coord, onClickEmptyCell, board }) => {
+    const date = Date.today();
+    const currentDate = date.getDateString();
+    const currentMonth = date.getMonthString();
+    const currentDayOfWeek = date.getDayOfWeekString();
 
     const isCurrentDateCell = value[0] === currentDate || value[0] === currentMonth || value[0] === currentDayOfWeek;
     const isValidCell = value[1] === 0 || isCurrentDateCell;

@@ -1,3 +1,4 @@
+import { DateModel as Date } from './DateModel';
 const Default = 0;
 const STORAGE_KEY = 'calendle-statistics';
 
@@ -27,15 +28,15 @@ export class CalendleStatistics {
     get WinValues() { return this._winValues; }
 
     // setters
-    incrementGamesPlayed() { this._gamesPlayed = this._gamesPlayed + 1; return this;}
-    incrementGamesWon() { this._gamesWon = this._gamesWon + 1; return this;}
-    setCurrentStreak(val) { this._currentStreak = val; return this;}
-    setMaxStreak(val) { this._maxStreak = val; return this;}
-    setLastWinDate(val) { this._lastWinDate = val; return this;}
-    addWinValue(val) { this._winValues.push(val); return this;}
-    setLastUpdatedDate() {this._lastUpdatedDate = new Date().toDateString(); return this;}
+    incrementGamesPlayed() { this._gamesPlayed = this._gamesPlayed + 1; return this; }
+    incrementGamesWon() { this._gamesWon = this._gamesWon + 1; return this; }
+    setCurrentStreak(val) { this._currentStreak = val; return this; }
+    setMaxStreak(val) { this._maxStreak = val; return this; }
+    setLastWinDate(val) { this._lastWinDate = val; return this; }
+    addWinValue(val) { this._winValues.push(val); return this; }
+    setLastUpdatedDate() { this._lastUpdatedDate = Date.toString(); return this; }
 
-    resetCurrentStreak() {this._currentStreak = Default; return this;}
+    resetCurrentStreak() { this._currentStreak = Default; return this; }
 
     // initialize with data from LocalStorage
     initialize() {
@@ -78,12 +79,12 @@ export class CalendleStatistics {
         let maxStreak = this.MaxStreak;
         if (currentStreak > maxStreak) {
             maxStreak = currentStreak;
-        } 
+        }
 
         this.setCurrentStreak(currentStreak)
             .setMaxStreak(maxStreak)
             .incrementGamesWon()
-            .setLastWinDate(date.toDateString())
+            .setLastWinDate(date.toString())
             .addWinValue(winValue)
             .update();
 

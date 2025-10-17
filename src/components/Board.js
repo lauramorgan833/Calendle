@@ -122,7 +122,6 @@ export const Board = ({ date, board, currentShape, onPlaceShape, updateBoard, sh
                                 onClickEmptyCell={onClickEmptyCell}
                                 coord={[x, y]}
                                 board={board}
-                                date={date}
                             />
                         )
                     })}
