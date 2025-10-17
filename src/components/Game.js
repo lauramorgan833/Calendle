@@ -1,4 +1,4 @@
-import { DateModel as Date, DAYSOFWEEK, MONTHS } from '../models/DateModel';
+import { DateModel as Date } from '../models/DateModel';
 import React, { useEffect, useState, useContext } from 'react';
 import { Board } from './Board';
 import { Shape } from './Shape';
@@ -55,7 +55,7 @@ export const Game = ({ setStatsDialogVisible }) => {
         }
 
         // if new day or empty board - reset game board and game state
-        if (!Date.equal(gameState.Date)
+        if (!Date.today().equals(gameState.Date)
             || (gameState.Count === 0 && gameState.Board.length === 0 && gameState.PlacedShapes.length === 0)) {
             setBoard(createGrid());
             gameState.reset();
