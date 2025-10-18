@@ -10,7 +10,6 @@ export const Board = ({ date, board, currentShape, onPlaceShape, updateBoard, sh
 
         if (currentShape === '' && ShapeNames.includes(existingShape) && !winner) {
             onRemoveShape(existingShape)
-            removeShape(existingShape)
         } else if (currentShape) {
             // check if current shape can be placed
             const shapeMatrix = shapes[currentShape].matrix
@@ -52,8 +51,7 @@ export const Board = ({ date, board, currentShape, onPlaceShape, updateBoard, sh
 
             // place shape on board
             if (canBePlaced) {
-                placeShape(x, y, shapeSection)
-                onPlaceShape()
+                onPlaceShape(x, y, shapeSection)
             }
         }
     }
@@ -82,33 +80,7 @@ export const Board = ({ date, board, currentShape, onPlaceShape, updateBoard, sh
         return canBePlaced
     }
 
-    const placeShape = (start_x, start_y, shape) => {
-        const board_copy = [...board]
-
-        shape.forEach((row, x) => {
-            row.forEach((val, y) => {
-                if (val) {
-                    const new_x = x + start_x
-                    const new_y = y + start_y
-                    board_copy[new_x][new_y][1] = val
-                }
-            })
-        })
-
-        updateBoard(board_copy)
-    }
-
-    const removeShape = shapeName => {
-        let board_copy = [...board]
-
-        board_copy = board_copy.map(row => {
-            return row.map(col => {
-                return col[1] === shapeName ? [col[0], 0] : col
-            })
-        })
-
-        updateBoard(board_copy)
-    }
+    // placeShape and removeShape logic now handled in parent (Game.js)
 
     const getBoard = () => {
         return board.map((row, x) => {

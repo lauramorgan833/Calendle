@@ -6,7 +6,7 @@ import './styles/borders.css';
 import './styles/index.css'; // Import global styles
 import { Game } from './components/Game';
 import { Header } from './components/Header/Header';
-import { CalendleState } from './models/CalendleState';
+// import { CalendleState } from './models/CalendleState';
 
 export const ThemeContext = createContext();
 
@@ -14,9 +14,8 @@ const Home = () => {
     const date = Date.today();
     const [statsDialogVisible, setStatsDialogVisible] = React.useState(false);
     const [theme, setTheme] = useState('light');
-    const [gameState] = useState(new CalendleState());
-
-    gameState.initialize();
+    // const [gameState] = useState(new CalendleState());
+    // gameState.initialize();
 
     useEffect(() => {
         document.body.className = theme;
@@ -24,7 +23,7 @@ const Home = () => {
 
     const handleSetTheme = (newTheme) => {
         setTheme(newTheme);
-        gameState.setDarkMode(newTheme).update();
+        // If you want to persist theme, add logic to useCalendleState
     };
 
     return (

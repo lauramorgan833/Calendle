@@ -12,10 +12,9 @@ export class DateModel {
         this._date = new Date(date);
     }
 
-    // Returns ISO string for yesterday's date
-    static getYesterdayDateString(today) {
-        const date = today instanceof DateModel ? today : new DateModel(today);
-        return date.addDays(-1).toString();
+    // Returns ISO string for yesterday's date using internal date
+    getYesterdayDateString() {
+        return this.addDays(-1).toString();
     }
 
     // Factory returning a DateModel for 'today'
@@ -24,8 +23,10 @@ export class DateModel {
     // Return a cloned Date object (so callers can't mutate the internal date)
     currentDate() { return new Date(this._date); }
 
-    // String form
-    toString() { return this._date.toString(); }
+    // String form (YYYY-MM-DD)
+    toString() {
+        return this._date.toISOString().slice(0, 10);
+    }
 
     // Components
     getYear() { return this._date.getFullYear(); }

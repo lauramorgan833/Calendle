@@ -4,8 +4,8 @@ import { CalendleStatistics } from '../../models/CalendleStatistics';
 
 export const Stats = () => {
     const stats = new CalendleStatistics().initialize();
-    const currentGame = new CalendleState().initialize();
-    const winPercent = Math.round((stats.GamesWon*1.0/stats.GamesPlayed*1.0) * 100) || 0;
+    // TODO: Replace with useCalendleState or pass current game state as prop
+    const winPercent = Math.round((stats.GamesWon * 1.0 / stats.GamesPlayed * 1.0) * 100) || 0;
 
     return (
         <div>
@@ -18,8 +18,8 @@ export const Stats = () => {
             <p>Winning values: {stats.WinValues.join(', ')}</p>
             <br />
             <p><b>Current game</b></p>
-            <p>Count: {currentGame.Count}</p>
-            <p>Has won: {currentGame.Winner.toString()}</p>
+            <p>Count: {/* currentGame.Count */} {/* TODO: Update this line */}</p>
+            <p>Has won: {/* currentGame.Winner.toString() */} {/* TODO: Update this line */}</p>
         </div>
     )
 }
