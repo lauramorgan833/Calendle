@@ -3,9 +3,10 @@ import { DateModel } from '../models/DateModel';
 import { ShapeNames, createGrid } from '../lib/common';
 
 // Custom hook to manage Calendle game state and localStorage sync
+
 export default function useCalendleState() {
 
-    // default state shape
+    // Default state shape for a new game
     const defaultGameState = {
         date: DateModel.today(),
         count: 0,
@@ -32,13 +33,15 @@ export default function useCalendleState() {
         return { ...defaultGameState };
     };
 
+    // Main game state and setter
     const [gameState, setGameState] = useState(() => getInitialGameState());
 
+    // Sync game state to localStorage whenever it changes
     useEffect(() => {
         localStorage.setItem('calendleState', JSON.stringify(gameState));
     }, [gameState]);
 
-    // Reset state for a new day
+    // Reset state for a new day if the saved date is not today
     useEffect(() => {
         const today = DateModel.today().toString();
         if (gameState.date !== today) {

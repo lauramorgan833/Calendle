@@ -40,6 +40,7 @@ export const ShapeTransform = ({ currentShape, shapes, setShapes, winner }) => {
         }
     };
 
+    // Render rotate buttons for shape manipulation
     return (
         <div className="rotateButtons">
             <button
