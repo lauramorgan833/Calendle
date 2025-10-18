@@ -2,7 +2,7 @@ import { DateModel as Date } from '../models/DateModel';
 import React, { useEffect, useState, useContext } from 'react';
 import { Board } from './Board';
 import { Shape } from './Shape';
-import { TbRotateClockwise2, TbArrowsVertical, TbArrowsHorizontal } from 'react-icons/tb';
+import { ShapeTransform } from './ShapeTransform';
 import { createGrid, ShapeNames, SHAPES } from '../lib/common';
 import { ThemeContext } from '..';
 import { CalendleStatistics } from '../models/CalendleStatistics';
@@ -213,43 +213,6 @@ export const Game = ({ setStatsDialogVisible }) => {
         }
     };
 
-    const rotate = (currentShape, dir) => {
-        if (!winner && currentShape) {
-            const shapeList = { ...shapes };
-            const shape = shapeList[currentShape];
-            const matrix = shape.matrix;
-
-            const x_values_rev = matrix.map((x, i) => i).reverse();
-            const length = Math.max(matrix.length, matrix[0].length);
-
-            let newMatrix = Array.from(Array(length), () => {
-                return new Array(length).fill(0);
-            });
-
-            matrix.forEach((row, y) => {
-                return row.forEach((val, x) => {
-                    if (dir === 'vflip') {
-                        const new_Y = x_values_rev[y];
-                        newMatrix[new_Y][x] = val;
-                    } else if (dir === 'hflip') {
-                        const new_Y = x_values_rev[x];
-                        newMatrix[y][new_Y] = val;
-                    } else if (dir === 'right') {
-                        const new_Y = x_values_rev[y];
-                        newMatrix[x][new_Y] = val;
-                    } else if (dir === 'left') {
-                        const new_Y = x_values_rev[x];
-                        newMatrix[new_Y][y] = val;
-                    }
-                });
-            });
-
-            shape.matrix = newMatrix;
-
-            shapeList[shape] = shape;
-            setShapes(shapeList);
-        }
-    };
 
     return (
         <div id={'game'} className='game'>
@@ -273,20 +236,12 @@ export const Game = ({ setStatsDialogVisible }) => {
                         <div>
                             <button className={"resetButton"} onClick={reset}>Reset</button>
                         </div>
-                        <div className="rotateButtons">
-                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'left')}>
-                                <TbRotateClockwise2 style={{ transform: 'scaleY(-1)' }} />
-                            </button>
-                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'vflip')}>
-                                <TbArrowsVertical />
-                            </button>
-                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'hflip')}>
-                                <TbArrowsHorizontal />
-                            </button>
-                            <button className={"rotateButton"} onClick={() => rotate(currentShape, 'right')}>
-                                <TbRotateClockwise2 />
-                            </button>
-                        </div>
+                        <ShapeTransform
+                            currentShape={currentShape}
+                            shapes={shapes}
+                            setShapes={setShapes}
+                            winner={winner}
+                        />
                     </div>
                     {isLandscape && <div className="shapesContainer">
                         {remainingShapes.map(name => {
