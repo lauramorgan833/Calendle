@@ -1,4 +1,5 @@
 import { DateModel as Date } from '../models/DateModel';
+import { findWinner } from '../utils/winLogic';
 import React, { useEffect, useState, useContext } from 'react';
 import { Board } from './Board';
 import { Shape } from './Shape';
@@ -9,10 +10,6 @@ import { CalendleStatistics } from '../models/CalendleStatistics';
 import { CalendleState } from '../models/CalendleState';
 import { upsert_solution } from '../api/mongodb/upsert_solution.js';
 
-const getYesterdayDateString = (today) => {
-    const date = today instanceof Date ? today : new Date(today);
-    return date.addDays(-1).toString();
-};
 
 export const Game = ({ setStatsDialogVisible }) => {
     const [date, setDate] = useState(Date.today());
@@ -61,7 +58,7 @@ export const Game = ({ setStatsDialogVisible }) => {
             gameState.reset();
 
             // update streak - if last win date != yesterday, reset current streak
-            if (statistics.LastWinDate !== getYesterdayDateString(date)) {
+            if (statistics.LastWinDate !== Date.getYesterdayDateString(date)) {
                 statistics.resetCurrentStreak().update();
             }
         } else {
@@ -100,7 +97,9 @@ export const Game = ({ setStatsDialogVisible }) => {
 
     useEffect(() => {
         if (!winner && placedShapes.length > 0) {
-            findWinner(placedShapes);
+            if (findWinner(placedShapes, remainingShapes, board)) {
+                onWin();
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [placedShapes]);
@@ -125,59 +124,6 @@ export const Game = ({ setStatsDialogVisible }) => {
         upsert_solution(date.toString(), board);
     };
 
-    const findWinner = (placedShapes) => {
-        if (placedShapes.length === ShapeNames.length && remainingShapes.length === 0) {
-            if (validateWinner()) {
-                onWin();
-            }
-        }
-    };
-
-    const validateWinner = () => {
-        const b = board;
-
-        const reducedBoard = b.reduce((a, b) => {
-            for (const m of b) {
-                a.push(m);
-            }
-            return a;
-        }, []);
-
-        // check that the board submitted matches today's date.
-        const [boardMonth, boardDate, boardDayOfWeek] = reducedBoard
-            .filter(x => x[1] === -1 && x[0] !== 'dead')
-            .map(y => y[0]);
-
-        const date = Date.today();
-        const currentDate = date.getDateString();
-        const currentMonth = date.getMonthString();
-        const currentDayOfWeek = date.getDayOfWeekString();
-        const correctDate = currentMonth === boardMonth && currentDate === boardDate && currentDayOfWeek === boardDayOfWeek;
-
-        // check that the board contains all required shapes, with no duplicates.
-        let containsAllLetters = true;
-        for (const shape in SHAPES) {
-            const boardContains = reducedBoard.filter(x => x[1] === shape).length;
-            const requiredSize = SHAPES[shape].size;
-            containsAllLetters = containsAllLetters && requiredSize === boardContains;
-        }
-
-        // check the board is the correct size
-        let boardValid = b.length === 8;
-        boardValid = boardValid && reducedBoard.length === 56;
-        boardValid =
-            boardValid &&
-            JSON.stringify(reducedBoard.map(x => x[0])) ===
-            '["Jan","Feb","Mar","Apr","May","Jun","dead","Jul","Aug","Sep","Oct","Nov","Dec","dead",' +
-            '"1","2","3","4","5","6","7","8","9","10",' +
-            '"11","12","13","14","15","16","17","18","19","20",' +
-            '"21","22","23","24","25","26","27","28","29","30","31",' +
-            '"Sun","Mon","Tues","Wed","dead","dead","dead","dead","Thurs","Fri","Sat"]';
-
-        const isValid = correctDate && containsAllLetters && boardValid;
-
-        return isValid;
-    };
 
     const placeShape = () => {
         if (!winner && currentShape) {

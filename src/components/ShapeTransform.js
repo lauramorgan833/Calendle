@@ -41,8 +41,9 @@ export const ShapeTransform = ({ currentShape, shapes, setShapes, winner }) => {
     };
 
     return (
-        <div className="shape-transform-controls">
+        <div className="rotateButtons">
             <button
+                className="rotateButton"
                 aria-label="Rotate Left"
                 onClick={() => rotate('left')}
                 disabled={!currentShape || winner}
@@ -50,6 +51,7 @@ export const ShapeTransform = ({ currentShape, shapes, setShapes, winner }) => {
                 <TbRotateClockwise2 style={{ transform: 'scaleY(-1)' }} />
             </button>
             <button
+                className="rotateButton"
                 aria-label="Flip Vertical"
                 onClick={() => rotate('vflip')}
                 disabled={!currentShape || winner}
@@ -57,6 +59,7 @@ export const ShapeTransform = ({ currentShape, shapes, setShapes, winner }) => {
                 <TbArrowsVertical />
             </button>
             <button
+                className="rotateButton"
                 aria-label="Flip Horizontal"
                 onClick={() => rotate('hflip')}
                 disabled={!currentShape || winner}
@@ -64,6 +67,7 @@ export const ShapeTransform = ({ currentShape, shapes, setShapes, winner }) => {
                 <TbArrowsHorizontal />
             </button>
             <button
+                className="rotateButton"
                 aria-label="Rotate Right"
                 onClick={() => rotate('right')}
                 disabled={!currentShape || winner}

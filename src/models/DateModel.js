@@ -1,4 +1,5 @@
 // Shared DateModel for the Calendle app
+// Shared DateModel for the Calendle app
 // Provides a small wrapper around JS Date with convenient helpers so the rest
 // of the codebase doesn't need to do date transformations everywhere.
 
@@ -9,6 +10,12 @@ export class DateModel {
     constructor(date = new Date()) {
         // always store an internal Date clone
         this._date = new Date(date);
+    }
+
+    // Returns ISO string for yesterday's date
+    static getYesterdayDateString(today) {
+        const date = today instanceof DateModel ? today : new DateModel(today);
+        return date.addDays(-1).toString();
     }
 
     // Factory returning a DateModel for 'today'
